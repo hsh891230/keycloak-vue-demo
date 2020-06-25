@@ -6,8 +6,20 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <script src="http://localhost:8080/auth/js/keycloak.js"></script>
   </head>
   <body>
+    <script>
+        var keycloak = new Keycloak({url: 'http://localhost:8080/auth', realm: 'demo', clientId: 'demo-app'});
+        keycloak.init({
+          onLoad: 'login-required',
+          enableLogging: true
+        }).then((authenticated) => {
+            console.log('authenticated: ' + authenticated)
+        }).catch(() => {
+            alert('failed to initialize');
+        });
+    </script>
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
